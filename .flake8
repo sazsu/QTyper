@@ -4,6 +4,8 @@ exclude =
     venv
 
 import-order-style = google
-
+application-import-names =
+    app
+    
 extend-ignore = 
     W191
