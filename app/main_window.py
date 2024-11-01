@@ -1,26 +1,30 @@
-from PyQt6.QtWidgets import QMainWindow, QStackedWidget
+from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 
-from app.widgets.text_area import TextArea
+from app.local_profile_page import LocalProfile
+from app.test_page import TestPage
 
 
 class MainWindow(QMainWindow):
 	def __init__(self):
 		super().__init__()
-		self.load_language_words()
 		self.initUI()
 
 	def initUI(self):
 		self.pages = QStackedWidget(self)  # add pages here
 
-		self.setGeometry(0, 0, 500, 500)
-		self.text_area_widget = TextArea(self)
-		self.text_area_widget.setGeometry(
-			300, 300, self.text_area_widget.width(), self.text_area_widget.height()
-		)
+		# maximum resolution available
+		self.setGeometry(QApplication.primaryScreen().availableGeometry())
 
-	def load_language_words(self):
-		with open('app/language_words/en.txt', 'r') as f:
-			self.en_words = map(lambda s: s.strip(), f.readlines())
-			
-		with open('app/language_words/ru.txt', 'r') as f:
-			self.ru_words = map(lambda s: s.strip(), f.readlines())
+		self.mode = True  # light mode by default
+
+		self.pages.addWidget(TestPage(self.pages))
+		self.pages.addWidget(LocalProfile(self.pages))
+
+		self.pages.setCurrentIndex(0)  # test page
+
+		self.pages.setGeometry(0, 0, 1920, 1080)
+
+	def change_mode(self):
+		self.mode = not self.mode
+		for page in self.pages:
+			page.change_mode()
