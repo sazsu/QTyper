@@ -4,6 +4,8 @@ from PyQt6.QtCore import QEvent, Qt
 from PyQt6.QtGui import QFont, QTextDocument
 from PyQt6.QtWidgets import QLabel, QWidget
 
+from app.config import Config
+
 
 class TextArea(QWidget):
 	def __init__(self, parent) -> None:
@@ -48,10 +50,11 @@ class TextArea(QWidget):
 			Qt.Key.Key_Backspace,
 			Qt.Key.Key_Space,
 		}
-		self.green_format = '<span style="color: green;">{}</span>'
-		self.red_format = '<span style="color: red;">{}</span>'
+		self.green_format = '<span style="color: #5cb200;">{}</span>'
+		self.red_format = '<span style="color: #ff506e;">{}</span>'
 
 		self.setGeometry(0, 0, 500, 500)
+		self.load_language_words()
 		self.load_base_words()
 
 		# set focus to listen keyboard
@@ -61,7 +64,7 @@ class TextArea(QWidget):
 		self.reset_test()
 
 	def load_base_words(self) -> None:
-		self.base_words = list(self.parent().en_words)
+		self.base_words = list(self.en_words)
 
 	def initUI(self) -> None:
 		font = QFont()
@@ -72,6 +75,7 @@ class TextArea(QWidget):
 
 		self.display = QLabel('', self)
 		self.display.setGeometry(0, 0, 500, 500)
+		self.reset_test()
 
 	def get_coords(self):
 		return self.current_word_index, self.current_char_index
@@ -170,3 +174,11 @@ class TextArea(QWidget):
 		self.target_text = sample(self.base_words, len(self.base_words))
 		self.user_text = {i: [] for i in range(len(self.target_text))}
 		self.highlighted_text = [list(word) for word in self.target_text]
+
+	def change_mode(self) -> None:
+		# self -> TestPage -> QStackedWidget -> MainWindow
+		pass
+
+	def load_language_words(self) -> None:
+		self.en_words = Config.en_words
+		self.ru_words = Config.ru_words
