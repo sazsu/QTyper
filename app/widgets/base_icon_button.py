@@ -14,13 +14,12 @@ class BaseIconButton(QWidget):
 
 	def initUI(self):
 		self.btn = QPushButton('', self)
-		self.btn.setGeometry(0, 0, 90, 90)
-		self.set_icon()
-		self.btn.setIconSize(QSize(90, 90))
+		self.btn.setGeometry(0, 0, 75, 75)
+		self.set_icon(True)
+		self.btn.setIconSize(QSize(75, 75))
 
-	# self -> ParentClass -> QStackedWidget -> MainWindow
-	def set_icon(self):
-		pass
+	def set_icon(self, mode: bool):
+		self.btn.setIcon(self.icon_paths[mode])
 
-	def change_mode(self):
-		pass
+	def change_mode(self, mode: bool):
+		self.set_icon(mode)
