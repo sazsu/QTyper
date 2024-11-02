@@ -7,6 +7,6 @@ class ModeButton(BaseIconButton):
 		self.btn.clicked.connect(self.btn_handler)
 
 	def btn_handler(self):
-		# chane mode of whole app
+		# change mode of whole app
 		# self -> TestPage -> QStackedWidget -> MainWindow
-		pass
+		self.parent().parent().parent().change_mode()
