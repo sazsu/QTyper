@@ -13,8 +13,7 @@ class TestPage(QWidget):
 		self.initUI()
 
 	def initUI(self):
-		self.setGeometry(0, 0, 1920, 1080)
-
+		self.setGeometry(0, 0, self.parent().width(), self.parent().height())
 		self.text_area = TextArea(self)
 
 		self.reset_button = ResetButton(
@@ -36,7 +35,7 @@ class TestPage(QWidget):
 		self.local_profile_button.move(180, 0)
 		self.settings_button.move(270, 0)
 
-	def change_mode(self):
+	def change_mode(self, mode: bool):
 		for child in self.children():
-			if not isinstance(child, QLabel):  # ignore logo
-				child.change_mode()
+			if not isinstance(child, (QLabel, TextArea)):  # ignore logo, text_area
+				child.change_mode(mode)
