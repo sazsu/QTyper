@@ -6,5 +6,8 @@ class LocalProfile(QWidget):
         super().__init__(parent=parent)
         self.initUI()
 
-    def initUI(self):
+    def initUI(self) -> None:
+        pass
+
+    def change_mode(self, mode: bool) -> None:
         pass
