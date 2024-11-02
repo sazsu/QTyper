@@ -8,4 +8,4 @@ class ResetButton(BaseIconButton):
 
 	def btn_handler(self):
 		# reset test
-		pass
+		self.parent().text_area.reset_test()
