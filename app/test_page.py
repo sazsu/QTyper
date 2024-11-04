@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QLabel, QWidget
 
+from app.widgets.line_chart import LineChart
 from app.widgets.local_profile_button import LocalProfileButton
 from app.widgets.mode_button import ModeButton
 from app.widgets.reset_button import ResetButton
@@ -15,6 +16,11 @@ class TestPage(QWidget):
 	def initUI(self):
 		self.setGeometry(0, 0, self.parent().width(), self.parent().height())
 		self.text_area = TextArea(self)
+		self.text_area.setObjectName('text_area')
+		self.text_area.setGeometry(50, 50, 1000, 500)
+		self.chart = LineChart(self)
+		self.chart.setGeometry(100, 100, 1000, 500)
+		self.chart.setVisible(False)
 
 		self.reset_button = ResetButton(
 			'app/assets/reset_light.svg', 'app/assets/reset_dark.svg', self
@@ -37,5 +43,12 @@ class TestPage(QWidget):
 
 	def change_mode(self, mode: bool):
 		for child in self.children():
-			if not isinstance(child, (QLabel, TextArea)):  # ignore logo, text_area
+			if not isinstance(child, QLabel):  # ignore logo, text_area
 				child.change_mode(mode)
+
+	def show_line_chart(self, wpm_arr, acc_arr) -> None:
+		self.text_area.setVisible(False)
+		self.text_area.reset_test()
+
+		self.chart.set_values(wpm_arr, acc_arr)
+		self.chart.setVisible(True)
