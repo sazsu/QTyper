@@ -446,6 +446,11 @@ class Config:
 		Qt.Key.Key_Backspace,
 		Qt.Key.Key_Space,
 	}
+	white = '#f2f2f2'
+	light_gray = '#c2c2c2'
+	black = '#121212'
+	wpm_purple = '#7851a9'
+	acc_cyan = '#23d5d5'
 	correct_format = '<span class="correct" style="color: #1fc471;">{}</span>'
 	wrong_format = '<span class="wrong" style="color: #ff506e;">{}</span>'
 
@@ -455,9 +460,7 @@ class Config:
 			background: #f2f2f2;
 		}
 		QPushButton { border: none; }
-		TextArea {
-			border: 2px solid black;
-		}'''
+		'''
 
 	app_dark = '''
 		* {
@@ -465,6 +468,4 @@ class Config:
 			background: #121212;
 		}
 		QPushButton { border: none; }
-		TextArea {
-			border: 2px solid white;
-		}'''
+		'''
