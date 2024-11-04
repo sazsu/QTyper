@@ -7,5 +7,8 @@ class ResetButton(BaseIconButton):
 		self.btn.clicked.connect(self.btn_handler)
 
 	def btn_handler(self):
-		# reset test
-		self.parent().text_area.reset_test()
+		if self.parent().text_area.isVisible() is True:
+			self.parent().text_area.reset_test()
+		else:  # showing a chart -> test was reseted chart was shown
+			self.parent().chart.setVisible(False)
+			self.parent().text_area.setVisible(True)
