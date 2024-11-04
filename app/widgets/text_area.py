@@ -10,8 +10,7 @@ from app.managers.text_manager import TextManager
 class TextArea(QWidget):
 	def __init__(self, parent) -> None:
 		super().__init__(parent=parent)
-		self.setGeometry(0, 0, self.parent().width(), 500)
-
+		self.setGeometry(0, 0, int(self.parent().width() * 0.7), 500)
 		# set focus to listen keyboard
 		self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
@@ -19,7 +18,7 @@ class TextArea(QWidget):
 		self.text_manager = TextManager(Config.en_words, Config.ru_words)
 
 		# init stats manager
-		self.stats_manager = StatsManager(self.text_manager)
+		self.stats_manager = StatsManager(self, self.text_manager)
 		self.initUI()
 
 	def initUI(self) -> None:
@@ -29,11 +28,21 @@ class TextArea(QWidget):
 		self.document = QTextDocument()
 		self.document.setDefaultFont(font)
 
-		self.display = QLabel('', self)
-		self.display.setGeometry(0, 0, self.width(), self.height())
+		# self.display = QLabel('', self)
+		self.first_row_display = QLabel('', self)
+		self.second_row_display = QLabel('', self)
+		self.third_row_display = QLabel('', self)
+
+		self.first_row_display.setGeometry(0, 200, 2000, 50)
+		self.second_row_display.setGeometry(0, 250, 2000, 50)
+		self.third_row_display.setGeometry(0, 300, 2000, 50)
+
+		# self.display.setGeometry(0, 0, self.width(), self.height())
 		self.reset_test()
 
 	def keyPressEvent(self, event: QEvent) -> None:
+		if not self.isVisible():
+			return
 		if event.key() not in self.text_manager.KEYS_TO_LISTEN:
 			return
 		if event.key() == Qt.Key.Key_Backspace:
@@ -50,11 +59,28 @@ class TextArea(QWidget):
 	def update_display(self) -> None:
 		self.text_manager.update_highlighted_text()
 		self.text_manager.add_caret()
-		self.document.setHtml(self.text_manager.generate_display_text())
+		(
+			first_row_text,
+			second_row_text,
+			third_row_text
+		) = self.text_manager.generate_display_text()
+
+		self.document.setHtml(first_row_text)
+		self.first_row_display.setText(self.document.toHtml())
+
+		self.document.setHtml(second_row_text)
+		self.second_row_display.setText(self.document.toHtml())
+
+		self.document.setHtml(third_row_text)
+		self.third_row_display.setText(self.document.toHtml())
+
 		self.text_manager.remove_caret()
-		self.display.setText(self.document.toHtml())
 
 	def reset_test(self):
 		self.started = False
 		self.text_manager.reset()
+		self.stats_manager.reset()
 		self.update_display()
+
+	def change_mode(self, mode: bool) -> None:
+		pass

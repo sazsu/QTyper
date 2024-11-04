@@ -11,69 +11,106 @@ class TextManager:
 		self.correct_format = Config.correct_format
 		self.wrong_format = Config.wrong_format
 		self.KEYS_TO_LISTEN = Config.keys_to_listen
-		self.reset()
 
 	def reset(self):
 		self.target_text = sample(
 			self.lang_words[self.curr_words_lang],
 			200,  # length is always 200
-		)  # multiply by coeff (mode selected)
-		self.user_text = {i: [] for i in range(len(self.target_text))}
-		self.highlighted_text = [list(word) for word in self.target_text]
+		)  # TODO: multiply by coeff (mode selected)
+		self.user_text = [
+			[[] for _ in range(15)] for _ in range(len(self.target_text) // 15)
+		]
+		self.highlighted_text = [
+			[list(word) for word in self.target_text[i * 15:i * 15 + 15]]
+			for i in range(len(self.target_text) // 15)
+		]
+		self.curr_row_index = 0
 		self.current_word_index = 0
 		self.current_char_index = -1
 		self.correct_words = set()
 
-	def get_coords(self) -> Tuple[int, int]:
-		return self.current_word_index, self.current_char_index
+		self.correct_chars = set()
+		self.wrong_chars = set()
 
-	def update_coords(self, new_word_index: int, new_char_index: int) -> None:
+	def get_coords(self) -> Tuple[int, int, int]:
+		return self.curr_row_index, self.current_word_index, self.current_char_index
+
+	def update_coords(
+		self, new_row_index: int, new_word_index: int, new_char_index: int
+	) -> None:
+		self.curr_row_index = new_row_index
 		self.current_word_index = new_word_index
 		self.current_char_index = new_char_index
 
 	def handle_backspace(self) -> None:
-		word_idx, char_idx = self.get_coords()
+		row_idx, word_idx, char_idx = self.get_coords()
 
 		if char_idx >= 0:
-			self.user_text[word_idx].pop()
-			self.remove_correct_word(word_idx)
-			self.update_coords(word_idx, char_idx - 1)
-		# do not backspace if previous word was correctly typed
+			self.user_text[row_idx][word_idx].pop()
+			self.update_coords(row_idx, word_idx, char_idx - 1)
+		# first word of the row
+		# backtrack to the last word of the previous row
+		# if it wasn't correctly typed and current row isn't the first row
+		elif (
+			char_idx == -1
+			and word_idx == 0
+			and row_idx > 0
+			and self.is_user_word_correct(row_idx - 1, 14) is False
+		):
+			self.update_coords(
+				row_idx - 1, 14, len(self.user_text[row_idx - 1][14]) - 1
+			)
+		# not a first word of the row
+		# backtrack to the previous word
+		# if it wasn't correctly typed
 		elif (
 			char_idx == -1
 			and word_idx > 0
-			and word_idx - 1 not in self.correct_words
+			and (row_idx, word_idx - 1) not in self.correct_words
 		):
-			self.update_coords(word_idx - 1, len(self.user_text[word_idx - 1]) - 1)
+			self.update_coords(
+				row_idx, word_idx - 1, len(self.user_text[row_idx][word_idx - 1]) - 1
+			)
 		# do not change anything if caret is at first word's first symbol
 
 	def handle_space(self) -> None:
-		word_idx, char_idx = self.get_coords()
+		row_idx, word_idx, char_idx = self.get_coords()
 		if char_idx >= 0:  # not an empty word
-			is_word_correct = self.check_is_word_correct(word_idx)
+			is_word_correct = self.is_user_word_correct(row_idx, word_idx)
 			if is_word_correct:
-				self.correct_words.add(word_idx)
-			self.update_coords(word_idx + 1, -1)
+				self.add_correct_word_coords((row_idx, word_idx))
+			if word_idx == 14:  # last word of the row
+				self.update_coords(row_idx + 1, 0, -1)
+			else:
+				self.update_coords(row_idx, word_idx + 1, -1)
 
 	def handle_char(self, char: str) -> None:
-		word_idx, char_idx = self.get_coords()
-		self.user_text[word_idx].append(char)
-		self.update_coords(word_idx, char_idx + 1)
+		row_idx, word_idx, char_idx = self.get_coords()
+		user_word = self.get_user_word(row_idx, word_idx)
+		if len(user_word) < 15:  # set boundary
+			user_word.append(char)
+			self.update_coords(row_idx, word_idx, char_idx + 1)
 
 	def update_highlighted_text(self) -> None:
-		word_idx, _ = self.get_coords()
-		self.highlighted_text[word_idx] = self.highlight_word(word_idx)
+		row_idx, word_idx, _ = self.get_coords()
+		self.highlighted_text[row_idx][word_idx] = self.highlight_word(
+			row_idx, word_idx
+		)
 
-	def highlight_word(self, word_idx: int) -> List[str]:
-		word = self.user_text[word_idx].copy()
-		target_word = self.target_text[word_idx]
-
+	def highlight_word(self, row_idx: int, word_idx: int) -> List[str]:
+		# copy to not mess up the original word
+		word = self.get_user_word(row_idx, word_idx).copy()
+		target_word = self.get_target_word(row_idx, word_idx)
 		# color (green or red) all symbol in word in one loop
 		for i in range(len(word)):
 			if i < len(target_word) and target_word[i] == word[i]:
 				word[i] = self.correct_format.format(word[i])
+				self.add_correct_char((row_idx, word_idx, i))
 			else:
+				# print('adding wrong char')
 				word[i] = self.wrong_format.format(word[i])
+				self.add_wrong_char((row_idx, word_idx, i))
+				self.remove_correct_char((row_idx, word_idx, i))
 
 		# word is not fully typed -> add missing characters (placeholder color)
 		for i in range(len(word), len(target_word)):
@@ -81,30 +118,80 @@ class TextManager:
 		return word
 
 	def add_caret(self) -> None:
-		word_idx, char_idx = self.get_coords()
-		self.highlighted_text[word_idx].insert(char_idx + 1, '|')
+		row_idx, word_idx, char_idx = self.get_coords()
+		self.highlighted_text[row_idx][word_idx].insert(char_idx + 1, '|')
 
 	def remove_caret(self) -> None:
-		word_idx, char_idx = self.get_coords()
-		self.highlighted_text[word_idx].pop(char_idx + 1)
+		row_idx, word_idx, char_idx = self.get_coords()
+		self.highlighted_text[row_idx][word_idx].pop(char_idx + 1)
 
-	def generate_display_text(self) -> str:
-		return ' '.join(''.join(word) for word in self.highlighted_text)
+	def generate_display_text(self) -> Tuple[str, str, str]:
+		# return ' '.join(''.join(word) for word in self.highlighted_text)
+		(
+			row_idx,
+			_,
+			_,
+		) = self.get_coords()
+		first_idx, second_idx, third_idx = row_idx, row_idx + 1, row_idx + 2
+
+		if row_idx > 0:
+			first_idx -= 1
+			second_idx -= 1
+			third_idx -= 1
+
+		return (
+			' '.join(
+				''.join(chars_of_word)
+				for chars_of_word in self.highlighted_text[first_idx]
+			),
+			' '.join(
+				''.join(chars_of_word)
+				for chars_of_word in self.highlighted_text[second_idx]
+			),
+			' '.join(
+				''.join(chars_of_word)
+				for chars_of_word in self.highlighted_text[third_idx]
+			),
+		)
+
+	def add_correct_char(self, coords: Tuple[int, int, int]) -> None:
+		self.correct_chars.add(coords)
+
+	def remove_correct_char(self, coords: Tuple[int, int, int]) -> None:
+		if coords in self.correct_chars:
+			self.correct_chars.remove(coords)
+
+	def get_correct_chars(self) -> int:
+		return len(self.correct_chars)
+
+	def add_wrong_char(self, coords: Tuple[int, int, int]) -> None:
+		self.wrong_chars.add(coords)
+
+	def get_wrong_chars(self) -> int:
+		return len(self.wrong_chars)
 
 	def get_correct_words(self) -> int:
 		return len(self.correct_words)
 
-	def check_is_word_correct(self, word_idx: int) -> bool:
-		word = self.user_text[word_idx]
-		target_word = self.target_text[word_idx]
-		return (
-			len(word) == len(target_word)
-			and all(word[i] == target_word[i] for i in range(len(word)))
+	def is_user_word_correct(self, row_idx: int, word_idx: int) -> bool:
+		if (row_idx, word_idx) in self.correct_words:
+			return True
+
+		user_word = self.get_user_word(row_idx, word_idx)
+		target_word = self.get_target_word(row_idx, word_idx)
+		return len(user_word) == len(target_word) and all(
+			user_word[i] == target_word[i] for i in range(len(user_word))
 		)
 
-	def add_correct_word(self, word_idx: int) -> None:
-		self.correct_words.add(word_idx)
+	def add_correct_word_coords(self, coords: Tuple[int, int]) -> None:
+		self.correct_words.add(coords)
 
-	def remove_correct_word(self, word_idx: int) -> None:
-		if word_idx in self.correct_words:
-			self.correct_words.remove(word_idx)
+	def remove_correct_word_coords(self, coords: Tuple[int, int]) -> None:
+		if coords in self.correct_words:
+			self.correct_words.remove(coords)
+
+	def get_user_word(self, row_idx: int, word_idx: int) -> List[str]:
+		return self.user_text[row_idx][word_idx]
+
+	def get_target_word(self, row_idx: int, word_idx: int) -> str:
+		return self.target_text[row_idx * 15 + word_idx]
