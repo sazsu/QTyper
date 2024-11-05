@@ -7,7 +7,7 @@ class StatsManager(QObject):
 		self.text_area = text_area
 		self.text_manager = text_manager
 
-		self.test_time = 5
+		self.test_time = 15  # 15 seconds, TODO: pull from db
 		self.timer = QTimer(self)
 		self.timer.timeout.connect(self.get_stats)
 		self.timer.setInterval(1000)  # 1 second
