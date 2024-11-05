@@ -17,7 +17,7 @@ class TestPage(QWidget):
 		self.setGeometry(0, 0, self.parent().width(), self.parent().height())
 		self.text_area = TextArea(self)
 		self.text_area.setObjectName('text_area')
-		self.text_area.setGeometry(50, 50, 1000, 500)
+		self.text_area.setGeometry(50, 50, 1300, 500)
 		self.chart = LineChart(self)
 		self.chart.setGeometry(100, 100, 1000, 500)
 		self.chart.setVisible(False)
