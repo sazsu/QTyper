@@ -2,11 +2,10 @@ from PyQt6.QtCore import QObject, QTimer
 
 
 class StatsManager(QObject):
-	def __init__(self, text_area, text_manager) -> None:
+	def __init__(self, test_page, text_manager) -> None:
 		super().__init__()
-		self.text_area = text_area
 		self.text_manager = text_manager
-
+		self.test_page = test_page
 		self.test_time = 15  # 15 seconds, TODO: pull from db
 		self.timer = QTimer(self)
 		self.timer.timeout.connect(self.get_stats)
@@ -44,7 +43,7 @@ class StatsManager(QObject):
 	def increment_elapsed_time(self) -> None:
 		if self.elapsed_time == self.test_time:
 			wpm_arr, acc_arr = self.wpm_arr, self.acc_arr
-			self.text_area.parent().show_line_chart(wpm_arr, acc_arr)
+			self.test_page.show_line_chart(wpm_arr, acc_arr)
 		else:
 			self.elapsed_time += 1  # second
 
