@@ -12,13 +12,12 @@ class BaseIconButton(QPushButton):
 			False: QIcon(dark_icon_path)
 		}
 		self.initUI()
+		# prevent button from activating on keypress
 		self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
 	def initUI(self):
-		self.setGeometry(0, 0, 75, 75)
 		self.set_icon(True)
-		self.setIconSize(QSize(75, 75))
-		# prevent button from activating on keypress
+		self.setIconSize(QSize(90, 90))
 
 	def set_icon(self, mode: bool):
 		self.setIcon(self.icon_paths[mode])
