@@ -8,11 +8,16 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from app.widgets.mode_button import ModeButton
+from app.widgets.reset_button import ResetButton
+from app.widgets.settings_button import SettingsButton
+from app.widgets.local_profile_button import LocalProfileButton
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1810, 978)
+        Form.resize(1920, 1080)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -24,16 +29,17 @@ class Ui_Form(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.reset_button = QtWidgets.QPushButton(parent=Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+        self.reset_button = ResetButton(
+			'app/assets/reset_light.svg', 'app/assets/reset_dark.svg', parent=Form
+		)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.reset_button.sizePolicy().hasHeightForWidth())
         self.reset_button.setSizePolicy(sizePolicy)
+        self.reset_button.setMinimumSize(QtCore.QSize(90, 90))
         self.reset_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.reset_button.setText("")
-        icon = QtGui.QIcon.fromTheme("/home/marco/batcave/QTyper/app/assets")
-        self.reset_button.setIcon(icon)
         self.reset_button.setIconSize(QtCore.QSize(90, 90))
         self.reset_button.setFlat(True)
         self.reset_button.setObjectName("reset_button")
@@ -48,43 +54,53 @@ class Ui_Form(object):
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem2)
-        self.mode_button = QtWidgets.QPushButton(parent=Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+        self.mode_button = ModeButton(
+			'app/assets/mode_light.svg', 'app/assets/mode_dark.svg', parent=Form, main_window=Form.main_window
+		)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.mode_button.sizePolicy().hasHeightForWidth())
         self.mode_button.setSizePolicy(sizePolicy)
+        self.mode_button.setMinimumSize(QtCore.QSize(90, 90))
         self.mode_button.setSizeIncrement(QtCore.QSize(5, 5))
         self.mode_button.setBaseSize(QtCore.QSize(90, 90))
         self.mode_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.mode_button.setText("")
-        icon = QtGui.QIcon.fromTheme("/home/marco/batcave/QTyper/app/assets/")
-        self.mode_button.setIcon(icon)
         self.mode_button.setIconSize(QtCore.QSize(90, 90))
         self.mode_button.setFlat(True)
         self.mode_button.setObjectName("mode_button")
         self.buttonGroup.addButton(self.mode_button)
         self.horizontalLayout_2.addWidget(self.mode_button)
-        self.local_profile_button = QtWidgets.QPushButton(parent=Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+        self.local_profile_button = LocalProfileButton(
+			'app/assets/local_profile_light.svg',
+			'app/assets/local_profile_dark.svg',
+			Form,
+		)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.local_profile_button.sizePolicy().hasHeightForWidth())
         self.local_profile_button.setSizePolicy(sizePolicy)
+        self.local_profile_button.setMinimumSize(QtCore.QSize(90, 90))
         self.local_profile_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.local_profile_button.setText("")
-        icon = QtGui.QIcon.fromTheme("/home/marco/batcave/QTyper/app/assets/")
-        self.local_profile_button.setIcon(icon)
         self.local_profile_button.setIconSize(QtCore.QSize(90, 90))
         self.local_profile_button.setFlat(True)
         self.local_profile_button.setObjectName("local_profile_button")
         self.buttonGroup.addButton(self.local_profile_button)
         self.horizontalLayout_2.addWidget(self.local_profile_button)
-        self.settings_button = QtWidgets.QPushButton(parent=Form)
+        self.settings_button = SettingsButton(
+			'app/assets/settings_light.svg', 'app/assets/settings_dark.svg', parent=Form
+		)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.settings_button.sizePolicy().hasHeightForWidth())
+        self.settings_button.setSizePolicy(sizePolicy)
+        self.settings_button.setMinimumSize(QtCore.QSize(90, 90))
         self.settings_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.settings_button.setText("")
-        icon = QtGui.QIcon.fromTheme("/home/marco/batcave/QTyper/app/assets/")
-        self.settings_button.setIcon(icon)
         self.settings_button.setIconSize(QtCore.QSize(90, 90))
         self.settings_button.setFlat(True)
         self.settings_button.setObjectName("settings_button")
@@ -96,22 +112,18 @@ class Ui_Form(object):
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem3)
         self.main_container = QtWidgets.QStackedWidget(parent=Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.main_container.sizePolicy().hasHeightForWidth())
         self.main_container.setSizePolicy(sizePolicy)
         self.main_container.setMinimumSize(QtCore.QSize(1200, 0))
+        self.main_container.setMaximumSize(QtCore.QSize(1200, 16777215))
         self.main_container.setBaseSize(QtCore.QSize(1200, 0))
         self.main_container.setObjectName("main_container")
-        self.page_5 = QtWidgets.QWidget()
-        self.page_5.setObjectName("page_5")
-        self.main_container.addWidget(self.page_5)
-        self.page_6 = QtWidgets.QWidget()
-        self.page_6.setObjectName("page_6")
-        self.main_container.addWidget(self.page_6)
+
         self.horizontalLayout_4.addWidget(self.main_container)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem4)
         self.gridLayout.addLayout(self.horizontalLayout_4, 1, 0, 1, 2)
 
