@@ -1,7 +1,6 @@
-from PyQt6.QtCore import QSize
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QPushButton, QWidget
+from PyQt6.QtWidgets import QPushButton
 
 
 class BaseIconButton(QPushButton):
@@ -17,10 +16,9 @@ class BaseIconButton(QPushButton):
 
 	def initUI(self):
 		self.set_icon(True)
-		self.setIconSize(QSize(90, 90))
 
 	def set_icon(self, mode: bool):
 		self.setIcon(self.icon_paths[mode])
 
-	def change_mode(self, mode: bool):
+	def set_mode(self, mode: bool):
 		self.set_icon(mode)
