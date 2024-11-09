@@ -1,7 +1,8 @@
 [flake8]
 exclude = 
-    __pycache__,
+    __pycache__
     venv
+    ui
 
 import-order-style = google
 application-import-names =
