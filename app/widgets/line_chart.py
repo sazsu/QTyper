@@ -36,7 +36,7 @@ class LineChart(QWidget):
 		self.canvas.ax2.set_ylabel('Accuracy', color=Config.acc_cyan)
 		self.canvas.ax2.plot(range(len(acc_arr)), acc_arr, color=Config.acc_cyan)
 
-	def change_mode(self, mode: bool) -> None:
+	def set_mode(self, mode: bool) -> None:
 		if mode:
 			bg_color = Config.white
 			text_color = Config.black
@@ -46,7 +46,7 @@ class LineChart(QWidget):
 
 		self.setStyleSheet(f'background: {bg_color}')
 
-		# change bg color
+		# set bg color
 		self.canvas.figure.set_facecolor(bg_color)
 		self.canvas.ax1.set_facecolor(bg_color)
 

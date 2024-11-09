@@ -1,27 +1,30 @@
 from PyQt6.QtCore import QEvent, Qt
 from PyQt6.QtGui import QFont, QTextDocument
-from PyQt6.QtWidgets import QLabel, QWidget
+from PyQt6.QtWidgets import QWidget
 
-from app.config import Config
 from app.managers.statistics_manager import StatsManager
 from app.managers.text_manager import TextManager
-
 from app.ui.text_area_ui import Ui_Form
 
 
 class TextArea(QWidget):
-	def __init__(self, test_page, parent) -> None:
+	def __init__(self, db_manager, parent) -> None:
 		super().__init__(parent=parent)
 		self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 		self.ui = Ui_Form()
 		self.ui.setupUi(self)
+
 		# init text manager
-		self.text_manager = TextManager(Config.en_words, Config.ru_words)
+		self.text_manager = TextManager(db_manager)
 
 		# init stats manager
-		self.stats_manager = StatsManager(test_page, self.text_manager)
-		self.initUI()
+		self.stats_manager = StatsManager(db_manager, parent)
 
+		self.text_manager.stats_manager = self.stats_manager
+		self.stats_manager.text_manager = self.text_manager
+		self.stats_manager.test_time = self.text_manager.mode
+
+		self.initUI()
 
 	def initUI(self) -> None:
 		font = QFont()
@@ -73,6 +76,3 @@ class TextArea(QWidget):
 		self.text_manager.reset()
 		self.stats_manager.reset()
 		self.update_display()
-
-	def change_mode(self, mode: bool) -> None:
-		pass
