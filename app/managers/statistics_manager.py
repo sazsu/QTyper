@@ -2,13 +2,12 @@ from PyQt6.QtCore import QObject, QTimer
 
 
 class StatsManager(QObject):
-	def __init__(self, test_page, text_manager) -> None:
+	def __init__(self, db_manager, test_page) -> None:
 		super().__init__()
-		self.text_manager = text_manager
+		self.db_manager = db_manager
 		self.test_page = test_page
-		self.test_time = 15  # 15 seconds, TODO: pull from db
 		self.timer = QTimer(self)
-		self.timer.timeout.connect(self.get_stats)
+		self.timer.timeout.connect(self.timer_handler)
 		self.timer.setInterval(1000)  # 1 second
 
 	def start(self) -> None:
@@ -30,6 +29,12 @@ class StatsManager(QObject):
 		self.acc_arr.append(self.calculate_acc(correct_chars, wrong_chars))
 		self.increment_elapsed_time()
 
+	def timer_handler(self) -> None:
+		self.get_stats()
+
+		if self.text_manager.are_words_needed():
+			self.text_manager.add_words()
+
 	def calculate_wpm(self, correct_words: int) -> float:
 		return correct_words * 60 / self.elapsed_time
 
@@ -44,6 +49,7 @@ class StatsManager(QObject):
 		if self.elapsed_time == self.test_time:
 			wpm_arr, acc_arr = self.wpm_arr, self.acc_arr
 			self.test_page.show_line_chart(wpm_arr, acc_arr)
+			self.db_manager.add_test_data(wpm_arr[-1], acc_arr[-1])
 		else:
 			self.elapsed_time += 1  # second
 
