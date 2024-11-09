@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QWidget
 
 
-class LocalProfile(QWidget):
+class LocalProfilePage(QWidget):
     def __init__(self, parent):
         super().__init__(parent=parent)
         self.initUI()
@@ -9,5 +9,5 @@ class LocalProfile(QWidget):
     def initUI(self) -> None:
         pass
 
-    def change_mode(self, mode: bool) -> None:
+    def set_mode(self, mode: bool) -> None:
         pass
