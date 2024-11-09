@@ -5,24 +5,31 @@ from app.config import Config
 
 
 class TextManager:
-	def __init__(self, words_en: List[str], words_ru: List[str]) -> None:
-		self.lang_words = {0: words_en, 1: words_ru}
-		self.curr_words_lang = 0  # pull from db
+	def __init__(self, db_manager) -> None:
 		self.correct_format = Config.correct_format
 		self.wrong_format = Config.wrong_format
 		self.KEYS_TO_LISTEN = Config.keys_to_listen
+		self.lang_words = {
+			'english': Config.en_words,
+			'russian': Config.ru_words
+		}
+
+		self.db_manager = db_manager
+		self.mode, self.language = self.db_manager.get_test_settings()
 
 	def reset(self):
+		mode, language = self.get_test_settings()
+
 		self.target_text = sample(
-			self.lang_words[self.curr_words_lang],
-			200,  # length is always 200
-		)  # TODO: multiply by coeff (mode selected)
+			self.lang_words[language],
+			45,  # start with 45, add more if needed
+		)
 		self.user_text = [
-			[[] for _ in range(15)] for _ in range(len(self.target_text) // 15)
+			[[] for _ in range(15)] for _ in range(3)
 		]
 		self.highlighted_text = [
 			[list(word) for word in self.target_text[i * 15:i * 15 + 15]]
-			for i in range(len(self.target_text) // 15)
+			for i in range(3)
 		]
 		self.curr_row_index = 0
 		self.current_word_index = 0
@@ -32,8 +39,40 @@ class TextManager:
 		self.correct_chars = set()
 		self.wrong_chars = set()
 
+	def are_words_needed(self) -> bool:
+		# if next row is last row, then add more words
+		return len(self.user_text) - self.curr_row_index <= 2
+
+	def add_words(self) -> None:
+		self.target_text.extend(
+			sample(self.lang_words[self.language], 15)
+		)
+		self.user_text.extend(
+			[
+				[[] for _ in range(15)]
+				for _ in range(1)
+			]
+		)
+		self.highlighted_text.extend(
+			[list(word) for word in self.target_text[i * 15:i * 15 + 15]]
+			for i in range(
+				(len(self.target_text) - 15) // 15,
+				len(self.target_text) // 15
+			)
+		)
+
+	def get_test_settings(self) -> Tuple[int, str]:
+		return self.mode, self.language
+
+	def set_test_settings(self, mode: int, language: str) -> None:
+		self.mode, self.language = mode, language
+
 	def get_coords(self) -> Tuple[int, int, int]:
-		return self.curr_row_index, self.current_word_index, self.current_char_index
+		return (
+			self.curr_row_index,
+			self.current_word_index,
+			self.current_char_index
+		)
 
 	def update_coords(
 		self, new_row_index: int, new_word_index: int, new_char_index: int
@@ -69,7 +108,8 @@ class TextManager:
 			and (row_idx, word_idx - 1) not in self.correct_words
 		):
 			self.update_coords(
-				row_idx, word_idx - 1, len(self.user_text[row_idx][word_idx - 1]) - 1
+				row_idx, word_idx - 1,
+				len(self.user_text[row_idx][word_idx - 1]) - 1
 			)
 		# do not change anything if caret is at first word's first symbol
 
@@ -107,7 +147,6 @@ class TextManager:
 				word[i] = self.correct_format.format(word[i])
 				self.add_correct_char((row_idx, word_idx, i))
 			else:
-				# print('adding wrong char')
 				word[i] = self.wrong_format.format(word[i])
 				self.add_wrong_char((row_idx, word_idx, i))
 				self.remove_correct_char((row_idx, word_idx, i))
@@ -138,7 +177,6 @@ class TextManager:
 			first_idx -= 1
 			second_idx -= 1
 			third_idx -= 1
-
 		return (
 			' '.join(
 				''.join(chars_of_word)
