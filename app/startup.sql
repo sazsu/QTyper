@@ -6,8 +6,8 @@
 PRAGMA foreign_keys = off;
 BEGIN TRANSACTION;
 
--- Table: Data
-CREATE TABLE IF NOT EXISTS Data (
+-- Table: Stats
+CREATE TABLE IF NOT EXISTS Stats (
     wpm      INTEGER NOT NULL,
     accuracy REAL
 );
@@ -97,13 +97,13 @@ CREATE TABLE IF NOT EXISTS Settings (
                             NOT NULL,
     language        INTEGER REFERENCES Languages (id) 
                             NOT NULL,
-    interface_color INTEGER NOT NULL
+    interfaceMode INTEGER NOT NULL
 );
 
 INSERT INTO Settings (
                          mode,
                          language,
-                         interface_color
+                         interfaceMode
                      )
                      SELECT 1, 1, 1
                      WHERE NOT EXISTS (SELECT 1 FROM Settings);

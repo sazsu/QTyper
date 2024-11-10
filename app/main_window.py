@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
 		self.ui.setupUi(self)
 
 		self.db_manager = DatabaseManager('app.sqlite3')
-		self.mode = self.db_manager.get_interface_color()
+		self.interface_mode = self.db_manager.get_interface_mode()
 
 		test_page = TestPage(self.db_manager, self)
 
@@ -24,9 +24,11 @@ class MainWindow(QMainWindow):
 		self.set_interface_mode()
 
 	def set_interface_mode(self) -> None:
-		self.setStyleSheet(Config.app_light if self.mode else Config.app_dark)
-		self.ui.pages.widget(0).set_mode(self.mode)
+		self.setStyleSheet(
+			Config.app_light if self.interface_mode else Config.app_dark
+		)
+		self.ui.pages.widget(0).set_mode(self.interface_mode)
 
 	def change_interface_mode_db(self) -> None:
-		self.mode = not self.mode
-		self.db_manager.set_interface_mode(int(self.mode))
+		self.interface_mode = not self.interface_mode
+		self.db_manager.set_interface_mode(int(self.interface_mode))

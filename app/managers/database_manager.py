@@ -14,20 +14,20 @@ class DatabaseManager:
 		with self.conn as conn:
 			conn.executescript(startup_script)
 
-	def add_test_data(self, wpm: int, acc: float) -> None:
+	def add_test_stats(self, wpm: int, acc: float) -> None:
 		with self.conn as conn:
 			conn.execute(
 				"""
-				INSERT INTO Data (wpm, accuracy)
+				INSERT INTO Stats (wpm, accuracy)
 				VALUES (?, ?)
 				""",
 				(wpm, acc),
 			)
 
-	def get_interface_color(self) -> bool:
+	def get_interface_mode(self) -> bool:
 		with self.conn as conn:
 			res = conn.execute("""
-			SELECT interface_color FROM Settings""").fetchone()[0]
+			SELECT interfaceMode FROM Settings""").fetchone()[0]
 		return bool(res)
 
 	def set_interface_mode(self, mode: int) -> None:
@@ -35,29 +35,29 @@ class DatabaseManager:
 			conn.execute(
 				"""
 				UPDATE Settings
-				SET interface_color = ?""",
+				SET interfaceMode = ?""",
 				(mode,),
 			)
 
-	def fetch_all_test_data(self) -> Tuple[Iterable[int], Iterable[int]]:
+	def fetch_all_test_stats(self) -> Tuple[Iterable[int], Iterable[int]]:
 		with self.conn as conn:
 			wpm_stats = map(
 				lambda x: x[0],
 				conn.execute("""
-					SELECT wpm FROM Data""").fetchall(),
+					SELECT wpm FROM Stats""").fetchall(),
 			)
 
 			acc_stats = map(
 				lambda x: x[0],
 				conn.execute("""
-					SELECT accuracy FROM Data""").fetchall(),
+					SELECT accuracy FROM Stats""").fetchall(),
 			)
 		return wpm_stats, acc_stats
 
 	def clear_data(self) -> None:
 		with self.conn as conn:
 			conn.execute("""
-				DROP TABLE Data""")
+				DROP TABLE Stats""")
 		self.on_startup()
 
 	def get_test_settings(self) -> Tuple[int, str]:
