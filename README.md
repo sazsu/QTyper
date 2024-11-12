@@ -56,6 +56,9 @@ python -m app
 - СУБД SQLite
 - Matplotlib
 
+## ER диаграмма
+![ERD](ERD.svg)
+
 ## Признания
 [Английские](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) и [русские](https://en.wiktionary.org/wiki/Appendix:Russian_Frequency_lists/1-1000) слова для генерации тестов были выбраны из списка наиболее часто употребляемых слов по мнению [Wiktionary](https://www.wiktionary.org/).
 
