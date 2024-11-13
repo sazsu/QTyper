@@ -58,7 +58,7 @@
 
 ### Требования к дизайну
 
-<img src="../assets/mockup/main_window.png" width="65%">
+<img src="../mockup/qt/test_page.png" width="65%">
 
 #### Основное окно приложения
 
@@ -73,7 +73,7 @@
 
 <br><br>
 
-<img src="../assets/mockup/local_profile.png" width="65%">
+<img src="../mockup/qt/local_profile_page.png" width="65%">
 
 #### Окно локального профиля
 
@@ -87,7 +87,7 @@
 
 <br><br>
 
-<img src="../assets/mockup/delete_pop-up.png" width="65%">
+<img src="../mockup/qt/clear_data_pop_up.png" width="65%">
 
 #### Всплывающее окно при нажатии на кнопку очистки
 
@@ -101,7 +101,7 @@
 
 <br><br>
 
-<img src="../assets/mockup/test_settings_pop-up.png" width="65%">
+<img src="../mockup/qt/test_settings.png" width="65%">
 
 #### Окно настроек теста
 

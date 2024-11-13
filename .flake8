@@ -1,0 +1,12 @@
+[flake8]
+exclude = 
+    __pycache__
+    venv
+    ui
+
+import-order-style = google
+application-import-names =
+    app
+    
+extend-ignore = 
+    W191
