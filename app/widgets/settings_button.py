@@ -8,4 +8,5 @@ class SettingsButton(BaseIconButton):
 
 	def btn_handler(self):
 		# open test settings
-		pass
+		# block event loop
+		self.parent().test_settings.exec()

@@ -20,6 +20,9 @@ class StatsManager(QObject):
 		self.reset_wpm_arr()
 		self.reset_acc_arr()
 
+	def set_test_time(self, time: int) -> None:
+		self.test_time = time
+
 	def get_stats(self) -> None:
 		correct_words = self.text_manager.get_correct_words()
 		correct_chars = self.text_manager.get_correct_chars()
@@ -49,7 +52,7 @@ class StatsManager(QObject):
 		if self.elapsed_time == self.test_time:
 			wpm_arr, acc_arr = self.wpm_arr, self.acc_arr
 			self.test_page.show_line_chart(wpm_arr, acc_arr)
-			self.db_manager.add_test_data(wpm_arr[-1], acc_arr[-1])
+			self.db_manager.add_test_stats(wpm_arr[-1], acc_arr[-1])
 		else:
 			self.elapsed_time += 1  # second
 

@@ -22,8 +22,7 @@ class TextArea(QWidget):
 
 		self.text_manager.stats_manager = self.stats_manager
 		self.stats_manager.text_manager = self.text_manager
-		self.stats_manager.test_time = self.text_manager.mode
-
+		self.stats_manager.set_test_time(self.text_manager.mode)
 		self.initUI()
 
 	def initUI(self) -> None:
