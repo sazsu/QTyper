@@ -79,7 +79,7 @@ class DatabaseManager:
 				UPDATE Settings
 				SET mode=(
 					SELECT id FROM Modes WHERE mode=?
-				)
-				SET language=(
+				),
+				language=(
 					SELECT id FROM Languages WHERE language=?
 				)''', (mode, language))
