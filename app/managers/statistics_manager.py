@@ -39,7 +39,7 @@ class StatsManager(QObject):
 			self.text_manager.add_words()
 
 	def calculate_wpm(self, correct_words: int) -> float:
-		return correct_words * 60 / self.elapsed_time
+		return correct_words * 60 // self.elapsed_time
 
 	@staticmethod
 	def calculate_acc(correct_chars: int, wrong_chars: int) -> int:
