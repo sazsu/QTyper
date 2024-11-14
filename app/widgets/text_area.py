@@ -26,7 +26,7 @@ class TextArea(QWidget):
 		self.initUI()
 
 	def initUI(self) -> None:
-		font = QFont()
+		font = QFont('monospace')
 		font.setPointSize(24)
 
 		self.document = QTextDocument()

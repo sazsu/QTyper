@@ -17,7 +17,6 @@ from app.widgets.local_profile_button import LocalProfileButton
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1920, 1080)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -52,6 +51,11 @@ class Ui_Form(object):
         self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        logo = QtWidgets.QLabel('QTyper', Form)
+        font = QtGui.QFont('monospace')
+        font.setPointSize(36)
+        logo.setFont(font)
+        self.horizontalLayout_2.addWidget(logo)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem2)
         self.mode_button = ModeButton(
@@ -109,7 +113,7 @@ class Ui_Form(object):
         self.gridLayout.addLayout(self.horizontalLayout_2, 0, 0, 1, 1)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem3)
         self.main_container = QtWidgets.QStackedWidget(parent=Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Preferred)
@@ -118,8 +122,8 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.main_container.sizePolicy().hasHeightForWidth())
         self.main_container.setSizePolicy(sizePolicy)
         self.main_container.setMinimumSize(QtCore.QSize(1200, 0))
-        self.main_container.setMaximumSize(QtCore.QSize(1200, 16777215))
-        self.main_container.setBaseSize(QtCore.QSize(1200, 0))
+        self.main_container.setMaximumSize(QtCore.QSize(1400, 16777215))
+        # self.main_container.setBaseSize(QtCore.QSize(1400, 0))
         self.main_container.setObjectName("main_container")
 
         self.horizontalLayout_4.addWidget(self.main_container)
