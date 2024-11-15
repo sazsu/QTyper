@@ -8,4 +8,5 @@ class LocalProfileButton(BaseIconButton):
 
 	def btn_handler(self):
 		# open local profile
-		pass
+		self.parent().main_window.ui.pages.setCurrentIndex(1)  # local profile
+		self.parent().text_area.reset_test()

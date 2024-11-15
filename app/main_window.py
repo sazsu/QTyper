@@ -17,8 +17,11 @@ class MainWindow(QMainWindow):
 		self.interface_mode = self.db_manager.get_interface_mode()
 
 		test_page = TestPage(self.db_manager, self)
+		local_profile_page = LocalProfilePage(self)
 
 		self.ui.pages.addWidget(test_page)
+		self.ui.pages.addWidget(local_profile_page)
+
 		self.ui.pages.setCurrentWidget(test_page)
 
 		self.set_interface_mode()
@@ -28,6 +31,7 @@ class MainWindow(QMainWindow):
 			Config.app_light if self.interface_mode else Config.app_dark
 		)
 		self.ui.pages.widget(0).set_mode(self.interface_mode)
+		self.ui.pages.widget(1).set_mode(self.interface_mode)
 
 	def change_interface_mode_db(self) -> None:
 		self.interface_mode = not self.interface_mode
