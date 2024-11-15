@@ -16,7 +16,8 @@ class TestSettings(QDialog):
 
 		self.ui = Ui_Form()
 		self.ui.setupUi(self)
-
+		self.ui.cancelCrossButton.clicked.connect(lambda c: self.close())
+		
 		mode, lang = self.text_manager.get_test_settings()
 		self.ui.langComboBox.setCurrentText(lang)
 		self.ui.modeComboBox.setCurrentText(str(mode))
