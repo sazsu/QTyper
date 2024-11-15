@@ -31,4 +31,7 @@ class TestPage(QWidget):
 		self.ui.main_container.setCurrentWidget(self.chart)
 		self.text_area.reset_test()
 
+		# TODO: fix duplicate chart data
+		# self.chart.ui.canvas.clear()
 		self.chart.set_values(wpm_arr, acc_arr)
+		self.chart.render()
