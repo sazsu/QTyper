@@ -12,7 +12,6 @@ class LineChart(QWidget):
 
 	def set_values(self, wpm_arr, acc_arr) -> None:
 		self.ui.canvas.ax1.set_xlabel('Test')
-
 		self.ui.canvas.ax1.set_ylabel(
 			'Words Per Minute',
 			color=Config.wpm_purple
@@ -23,8 +22,15 @@ class LineChart(QWidget):
 			color=Config.wpm_purple
 		)
 
-		self.ui.canvas.ax2.set_ylabel('Accuracy', color=Config.acc_cyan)
-		self.ui.canvas.ax2.plot(range(len(acc_arr)), acc_arr, color=Config.acc_cyan)
+		self.ui.canvas.ax2.set_ylabel(
+			'Accuracy',
+			color=Config.acc_cyan
+		)
+		self.ui.canvas.ax2.plot(
+			range(len(acc_arr)),
+			acc_arr,
+			color=Config.acc_cyan
+		)
 
 	def set_mode(self, mode: bool) -> None:
 		if mode:
@@ -48,4 +54,7 @@ class LineChart(QWidget):
 		for spine in self.ui.canvas.ax2.spines.values():
 			spine.set_color(text_color)
 		# re-render
+		self.render()
+
+	def render(self) -> None:
 		self.ui.canvas.draw()
