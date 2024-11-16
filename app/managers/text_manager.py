@@ -8,7 +8,6 @@ class TextManager:
 	def __init__(self, db_manager) -> None:
 		self.correct_format = Config.correct_format
 		self.wrong_format = Config.wrong_format
-		self.KEYS_TO_LISTEN = Config.keys_to_listen
 		self.lang_words = {
 			'english': Config.en_words,
 			'russian': Config.ru_words
