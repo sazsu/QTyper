@@ -43,7 +43,7 @@ class StatsManager(QObject):
 
 	@staticmethod
 	def calculate_acc(correct_chars: int, wrong_chars: int) -> int:
-		return 100 * (correct_chars) // (correct_chars + wrong_chars)
+		return int(100 * (correct_chars) / (correct_chars + wrong_chars))
 
 	def reset_elapsed_time(self) -> None:
 		self.elapsed_time = 1  # second
