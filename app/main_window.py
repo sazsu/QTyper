@@ -16,7 +16,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 		self.interface_mode = self.db_manager.get_interface_mode()
 
 		test_page = TestPage(self.db_manager, self)
-		local_profile_page = LocalProfilePage(self)
+		local_profile_page = LocalProfilePage(self.db_manager, self)
 
 		self.pages.addWidget(test_page)
 		self.pages.addWidget(local_profile_page)
