@@ -3,20 +3,19 @@ from PyQt6.QtWidgets import QWidget
 from app.ui.local_profile_page_ui import Ui_Form
 
 
-class LocalProfilePage(QWidget):
+class LocalProfilePage(QWidget, Ui_Form):
 	def __init__(self, parent):
 		super().__init__(parent=parent)
 		self.main_window = parent
-		self.ui = Ui_Form()
-		self.ui.setupUi(self)
+		self.setupUi(self)
 
-		self.ui.cancel_cross_button.clicked.connect(
-			lambda s: self.main_window.ui.pages.setCurrentIndex(0)
+		self.cancel_cross_button.clicked.connect(
+			lambda s: self.main_window.pages.setCurrentIndex(0)
 		)
 
 	def initUI(self) -> None:
 		pass
 
 	def set_mode(self, mode: bool) -> None:
-		for button in self.ui.buttonGroup.buttons():
+		for button in self.buttonGroup.buttons():
 			button.set_mode(mode)

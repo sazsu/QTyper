@@ -6,7 +6,7 @@ from app.config import Config
 from app.ui.test_settings import Ui_Form
 
 
-class TestSettings(QDialog):
+class TestSettings(QDialog, Ui_Form):
 	def __init__(self, db_manager, test_page) -> None:
 		super().__init__()
 		self.text_area = test_page.text_area
@@ -14,13 +14,12 @@ class TestSettings(QDialog):
 		self.stats_manager = test_page.text_area.stats_manager
 		self.db_manager = db_manager
 
-		self.ui = Ui_Form()
-		self.ui.setupUi(self)
-		self.ui.cancelCrossButton.clicked.connect(lambda c: self.close())
-		
+		self.setupUi(self)
+		self.cancelCrossButton.clicked.connect(lambda c: self.close())
+
 		mode, lang = self.text_manager.get_test_settings()
-		self.ui.langComboBox.setCurrentText(lang)
-		self.ui.modeComboBox.setCurrentText(str(mode))
+		self.langComboBox.setCurrentText(lang)
+		self.modeComboBox.setCurrentText(str(mode))
 
 		self.finished.connect(self.on_closed)  # update db only when window is closed
 
@@ -34,8 +33,8 @@ class TestSettings(QDialog):
 
 	def get_new_test_settings(self) -> Tuple[int, str]:
 		return (
-			int(self.ui.modeComboBox.currentText()),
-			self.ui.langComboBox.currentText()
+			int(self.modeComboBox.currentText()),
+			self.langComboBox.currentText()
 		)
 
 	def set_mode(self, mode: bool) -> None:
@@ -46,4 +45,4 @@ class TestSettings(QDialog):
 			bg_color = Config.black
 			text_color = Config.white
 		self.setStyleSheet(f'background: {bg_color}; color: {text_color}')
-		self.ui.cancelCrossButton.set_mode(mode)
+		self.cancelCrossButton.set_mode(mode)
