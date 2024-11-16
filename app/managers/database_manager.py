@@ -39,19 +39,18 @@ class DatabaseManager:
 				(mode,),
 			)
 
-	def fetch_all_test_stats(self) -> Tuple[Iterable[int], Iterable[int]]:
+	def fetch_all_test_stats(self) -> (Tuple[int], Tuple[int]):
 		with self.conn as conn:
-			wpm_stats = map(
+			wpm_stats = tuple(map(
 				lambda x: x[0],
 				conn.execute("""
 					SELECT wpm FROM Stats""").fetchall(),
-			)
-
-			acc_stats = map(
+			))
+			acc_stats = tuple(map(
 				lambda x: x[0],
 				conn.execute("""
 					SELECT accuracy FROM Stats""").fetchall(),
-			)
+			))
 		return wpm_stats, acc_stats
 
 	def clear_data(self) -> None:
