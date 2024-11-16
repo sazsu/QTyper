@@ -1,11 +1,11 @@
-import matplotlib
+import matplotlib as mpl
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
 from app.config import Config
 
 
-matplotlib.use('QtAgg')
+mpl.use('QtAgg')
 
 
 class PlotCanvas(FigureCanvasQTAgg):
@@ -13,6 +13,7 @@ class PlotCanvas(FigureCanvasQTAgg):
 		self.figure = Figure(figsize=(width, height), dpi=dpi)
 		self.ax1 = self.figure.add_subplot(111)
 		self.ax2 = self.ax1.twinx()
+		# self.ax1.xaxis.set_major_locator(mpl.ticker.MaxNLocator(integer=True))
 		super().__init__(self.figure)
 
 	def clear_data(self) -> None:
@@ -22,17 +23,43 @@ class PlotCanvas(FigureCanvasQTAgg):
 
 	def set_values(self, wpm_arr, acc_arr) -> None:
 		self.clear_data()
+		self.figure.gca().xaxis.set_major_locator(
+			mpl.ticker.MaxNLocator(integer=True)
+		)
+		self.ax1.yaxis.set_major_locator(mpl.ticker.MaxNLocator(integer=True))
+		self.ax2.yaxis.set_major_locator(mpl.ticker.MaxNLocator(integer=True))
+
 		self.ax1.set_ylim(
 			-1,
-			max(99, max(wpm_arr)) + 1
+			max(100, max(wpm_arr or [-1])) + 1
 		)
-		self.ax1.set_xlabel('Test')
+		self.ax1.set_xlabel('Stats')
 		self.ax1.set_ylabel(
 			'Words Per Minute',
 			color=Config.wpm_purple
 		)
+		self.ax2.set_ylim(
+			0,
+			101
+		)
+		self.ax2.set_ylabel(
+			'Accuracy',
+			color=Config.acc_cyan
+		)
+		if not wpm_arr:
+			self.ax1.set_xticks([])
+			return
+
+		# only one test was done
+		if len(wpm_arr) == 1:
+			self.ax1.set_xticks([1])
+			wpm_arr *= 2
+			acc_arr *= 2
+
+		x_values = range(1, len(wpm_arr) + 1)
+
 		self.ax1.plot(
-			range(len(wpm_arr)),
+			x_values,
 			wpm_arr,
 			color=Config.wpm_purple,
 			linewidth=3,
@@ -47,7 +74,7 @@ class PlotCanvas(FigureCanvasQTAgg):
 			color=Config.acc_cyan
 		)
 		self.ax2.plot(
-			range(len(acc_arr)),
+			x_values,
 			acc_arr,
 			color=Config.acc_cyan,
 			linewidth=3,

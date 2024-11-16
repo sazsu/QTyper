@@ -1,4 +1,5 @@
 from app.widgets.base_icon_button import BaseIconButton
+from app.widgets.clear_data_pop_up import ClearDataPopUp
 
 
 class TrashBinButton(BaseIconButton):
@@ -7,4 +8,4 @@ class TrashBinButton(BaseIconButton):
 		self.clicked.connect(self.btn_handler)
 
 	def btn_handler(self):
-		pass
+		ClearDataPopUp(self.parent()).exec()
