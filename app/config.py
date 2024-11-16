@@ -411,6 +411,8 @@ class Config:
 	black = '#121212'
 	wpm_purple = '#7851a9'
 	acc_cyan = '#23d5d5'
+	green = '#1fc471'
+	red = '#ff506e'
 	correct_format = '<span class="correct" style="color: #1fc471;">{}</span>'
 	wrong_format = '<span class="wrong" style="color: #ff506e;">{}</span>'
 
