@@ -28,8 +28,8 @@ class Ui_Form(object):
         self.horizontalLayout.setContentsMargins(-1, -1, -1, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.cancel_cross_button = CancelCrossButton(
-            'app/assets/cancel_cross_light.svg',
-            'app/assets/cancel_cross_dark.svg',
+            'cancel_cross_light.svg',
+            'cancel_cross_dark.svg',
             Form
         )
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -45,8 +45,8 @@ class Ui_Form(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.save_button = SaveButton(
-            'app/assets/save_light.svg',
-            'app/assets/save_dark.svg',
+            'save_light.svg',
+            'save_dark.svg',
             Form
         )
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -60,8 +60,8 @@ class Ui_Form(object):
         self.save_button.setObjectName("save_button")
         self.horizontalLayout.addWidget(self.save_button)
         self.trash_bin_button = TrashBinButton(
-            'app/assets/trash_bin_light.svg',
-            'app/assets/trash_bin_dark.svg',
+            'trash_bin_light.svg',
+            'trash_bin_dark.svg',
             Form
         )
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)

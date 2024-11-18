@@ -181,7 +181,7 @@ class Ui_Form(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.mode_button = ModeButton(
-			'app/assets/mode_light.svg', 'app/assets/mode_dark.svg', parent=Form, main_window=Form.main_window
+			'mode_light.svg', 'mode_dark.svg', parent=Form, main_window=Form.main_window
 		)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -197,8 +197,8 @@ class Ui_Form(object):
         self.buttonGroup.addButton(self.mode_button)
         self.horizontalLayout.addWidget(self.mode_button)
         self.local_profile_button = LocalProfileButton(
-			'app/assets/local_profile_light.svg',
-			'app/assets/local_profile_dark.svg',
+			'local_profile_light.svg',
+			'local_profile_dark.svg',
 			Form,
 		)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -213,7 +213,7 @@ class Ui_Form(object):
         self.buttonGroup.addButton(self.local_profile_button)
         self.horizontalLayout.addWidget(self.local_profile_button)
         self.settings_button = SettingsButton(
-			'app/assets/settings_light.svg', 'app/assets/settings_dark.svg', parent=Form
+			'settings_light.svg', 'settings_dark.svg', parent=Form
 		)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -249,7 +249,7 @@ class Ui_Form(object):
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem3)
         self.reset_button = ResetButton(
-			'app/assets/reset_light.svg', 'app/assets/reset_dark.svg', parent=Form
+			'reset_light.svg', 'reset_dark.svg', parent=Form
 		)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)

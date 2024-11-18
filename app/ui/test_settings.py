@@ -23,7 +23,7 @@ class Ui_Form(object):
         self.gridLayout = QtWidgets.QGridLayout(Form)
         self.gridLayout.setObjectName("gridLayout")
         self.cancel_cross_button = CancelCrossButton(
-            'app/assets/cancel_cross_light.svg', 'app/assets/cancel_cross_dark.svg', parent=Form)
+            'cancel_cross_light.svg', 'cancel_cross_dark.svg', parent=Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
