@@ -1,5 +1,5 @@
 import sqlite3
-from typing import Iterable, Tuple
+from typing import Tuple
 
 
 class DatabaseManager:
