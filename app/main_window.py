@@ -5,15 +5,19 @@ from app.config import Config
 from app.managers.database_manager import DatabaseManager
 from app.pages.local_profile_page import LocalProfilePage
 from app.pages.test_page import TestPage
+from app.scripts.get_app_path import get_app_path
+from app.scripts.get_assets_path import get_assets_path
 from app.ui.main_window_ui import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 	def __init__(self) -> None:
 		super().__init__()
+		app_path = get_app_path()
+		assets_path = get_assets_path(app_path)
 		self.icon_paths = {
-			True: QIcon('app/assets/logo_light.svg'),
-			False: QIcon('app/assets/logo_dark.svg')
+			True: QIcon(str(assets_path / 'logo_light.svg')),
+			False: QIcon(str(assets_path / 'logo_dark.svg'))
 		}
 		self.setupUi(self)
 
