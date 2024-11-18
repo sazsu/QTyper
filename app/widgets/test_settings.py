@@ -15,7 +15,7 @@ class TestSettings(QDialog, Ui_Form):
 		self.db_manager = db_manager
 
 		self.setupUi(self)
-		self.cancelCrossButton.clicked.connect(lambda c: self.close())
+		self.cancel_cross_button.clicked.connect(lambda c: self.close())
 
 		mode, lang = self.text_manager.get_test_settings()
 		self.langComboBox.setCurrentText(lang)
@@ -45,4 +45,4 @@ class TestSettings(QDialog, Ui_Form):
 			bg_color = Config.black
 			text_color = Config.white
 		self.setStyleSheet(f'background: {bg_color}; color: {text_color}')
-		self.cancelCrossButton.set_mode(mode)
+		self.cancel_cross_button.set_mode(mode)

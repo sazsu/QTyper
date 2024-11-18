@@ -33,7 +33,6 @@ class PlotCanvas(FigureCanvasQTAgg):
 			-1,
 			max(100, max(wpm_arr or [-1])) + 1
 		)
-		self.ax1.set_xlabel('Stats')
 		self.ax1.set_ylabel(
 			'Words Per Minute',
 			color=Config.wpm_purple
@@ -44,7 +43,9 @@ class PlotCanvas(FigureCanvasQTAgg):
 		)
 		self.ax2.set_ylabel(
 			'Accuracy',
-			color=Config.acc_cyan
+			color=Config.acc_cyan,
+			rotation=270,
+			va='bottom'  # fix spacing
 		)
 		if not wpm_arr:
 			self.ax1.set_xticks([])
@@ -84,11 +85,13 @@ class PlotCanvas(FigureCanvasQTAgg):
 	def set_mode(self, bg_color, text_color) -> None:
 		self.figure.set_facecolor(bg_color)
 		self.ax1.set_facecolor(bg_color)
+		self.ax2.set_facecolor(bg_color)
 
 		self.ax1.tick_params(axis='both', colors=text_color)
 		self.ax2.tick_params(axis='both', colors=text_color)
 
-		for spine in self.ax1.spines.values():
-			spine.set_color(text_color)
 		for spine in self.ax2.spines.values():
 			spine.set_color(text_color)
+		for spine in self.ax1.spines.values():
+			spine.set_color(text_color)
+		

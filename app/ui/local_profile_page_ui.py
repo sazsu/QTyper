@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'app/ui/test_page.ui'
+# Form implementation generated from reading ui file 'app/ui/local_profile_page.ui'
 #
 # Created by: PyQt6 UI code generator 6.7.1
 #
@@ -12,7 +12,6 @@ from app.widgets.cancel_cross_button import CancelCrossButton
 from app.widgets.save_button import SaveButton
 from app.widgets.trash_bin_button import TrashBinButton
 from app.widgets.line_chart import LineChart
-from app.widgets.clear_data_pop_up import ClearDataPopUp
 
 
 class Ui_Form(object):
@@ -25,90 +24,90 @@ class Ui_Form(object):
         Form.setSizePolicy(sizePolicy)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.buttonGroup = QtWidgets.QButtonGroup(Form)
-        self.buttonGroup.setObjectName("buttonGroup")
-        self.horizontalLayout_1 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_1.setObjectName("horizontalLayout_1")
-
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(-1, -1, -1, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.cancel_cross_button = CancelCrossButton(
-            'app/assets/cancel_cross_light.svg', 'app/assets/cancel_cross_dark.svg', parent=Form
+            'app/assets/cancel_cross_light.svg',
+            'app/assets/cancel_cross_dark.svg',
+            Form
         )
-        self.cancel_cross_button.setSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cancel_cross_button.sizePolicy().hasHeightForWidth())
+        self.cancel_cross_button.setSizePolicy(sizePolicy)
         self.cancel_cross_button.setMinimumSize(QtCore.QSize(90, 90))
-        self.cancel_cross_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.cancel_cross_button.setText("")
-        self.cancel_cross_button.setIconSize(QtCore.QSize(90, 90))
         self.cancel_cross_button.setFlat(True)
-        self.buttonGroup.addButton(self.cancel_cross_button)
-
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_1.addItem(spacerItem2)
+        self.cancel_cross_button.setObjectName("cancel_cross_button")
+        self.horizontalLayout.addWidget(self.cancel_cross_button)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
         self.save_button = SaveButton(
-			'app/assets/save_light.svg', 'app/assets/save_dark.svg', parent=Form
-		)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
+            'app/assets/save_light.svg',
+            'app/assets/save_dark.svg',
+            Form
+        )
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.save_button.sizePolicy().hasHeightForWidth())
         self.save_button.setSizePolicy(sizePolicy)
         self.save_button.setMinimumSize(QtCore.QSize(90, 90))
-        self.save_button.setSizeIncrement(QtCore.QSize(5, 5))
-        self.save_button.setBaseSize(QtCore.QSize(90, 90))
-        self.save_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.save_button.setText("")
-        self.save_button.setIconSize(QtCore.QSize(90, 90))
         self.save_button.setFlat(True)
         self.save_button.setObjectName("save_button")
-        self.buttonGroup.addButton(self.save_button)
-        self.horizontalLayout_1.addWidget(self.save_button)
-
+        self.horizontalLayout.addWidget(self.save_button)
         self.trash_bin_button = TrashBinButton(
-			'app/assets/trash_bin_light.svg',
-			'app/assets/trash_bin_dark.svg',
-			Form,
-		)
+            'app/assets/trash_bin_light.svg',
+            'app/assets/trash_bin_dark.svg',
+            Form
+        )
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.trash_bin_button.sizePolicy().hasHeightForWidth())
         self.trash_bin_button.setSizePolicy(sizePolicy)
         self.trash_bin_button.setMinimumSize(QtCore.QSize(90, 90))
-        self.trash_bin_button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.trash_bin_button.setText("")
-        self.trash_bin_button.setIconSize(QtCore.QSize(90, 90))
         self.trash_bin_button.setFlat(True)
         self.trash_bin_button.setObjectName("trash_bin_button")
-        self.buttonGroup.addButton(self.trash_bin_button)
-        self.horizontalLayout_1.addWidget(self.trash_bin_button)
-        
+        self.horizontalLayout.addWidget(self.trash_bin_button)
+        self.horizontalLayout.setStretch(0, 5)
+        self.horizontalLayout.setStretch(1, 85)
+        self.horizontalLayout.setStretch(2, 5)
+        self.horizontalLayout.setStretch(3, 5)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem1)
+        self.chart = LineChart(Form)
+        self.chart.setObjectName("chart")
+        self.horizontalLayout_3.addWidget(self.chart)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem2)
+        self.horizontalLayout_3.setStretch(0, 1)
+        self.horizontalLayout_3.setStretch(1, 8)
+        self.horizontalLayout_3.setStretch(2, 1)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem3)
-        self.chart = LineChart(Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.chart.sizePolicy().hasHeightForWidth())
-        self.chart.setSizePolicy(sizePolicy)
-        self.chart.setMinimumSize(QtCore.QSize(1200, 0))
-        self.chart.setMaximumSize(QtCore.QSize(1400, 16777215))
-        # self.chart.setBaseSize(QtCore.QSize(1400, 0))
-        self.chart.setObjectName("chart")
-
-        self.horizontalLayout_2.addWidget(self.chart)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem4)
-
-        self.verticalLayout.addLayout(self.horizontalLayout_1)
+        self.horizontalLayout_2.setStretch(0, 475)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
-        # self.verticalLayout.addLayout(self.horizontalLayout)
-        spacerItem5 = QtWidgets.QSpacerItem(0, 95, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
-        self.verticalLayout.addItem(spacerItem5)
-        self.clear_data_pop_up = ClearDataPopUp(Form)
+        self.verticalLayout.setStretch(0, 5)
+        self.verticalLayout.setStretch(1, 90)
+        self.verticalLayout.setStretch(2, 5)
+        self.buttonGroup = QtWidgets.QButtonGroup(self)
+        self.buttonGroup.addButton(self.cancel_cross_button)
+        self.buttonGroup.addButton(self.save_button)
+        self.buttonGroup.addButton(self.trash_bin_button)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Test Page"))
+        Form.setWindowTitle(_translate("Form", "Local Profile Page"))
