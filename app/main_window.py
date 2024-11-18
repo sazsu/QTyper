@@ -1,5 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QMainWindow
 
 from app.config import Config
 from app.managers.database_manager import DatabaseManager
