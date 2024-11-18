@@ -2,16 +2,17 @@ from random import sample
 from typing import List, Tuple
 
 from app.config import Config
+from app.word_dictionary import WordDict
 
 
 class TextManager:
 	def __init__(self, db_manager) -> None:
 		self.correct_format = Config.correct_format
 		self.wrong_format = Config.wrong_format
-		self.KEYS_TO_LISTEN = Config.keys_to_listen
+		self.WORDS_PER_ROW = 12
 		self.lang_words = {
-			'english': Config.en_words,
-			'russian': Config.ru_words
+			'english': WordDict.en_words,
+			'russian': WordDict.ru_words,
 		}
 
 		self.db_manager = db_manager
@@ -19,16 +20,21 @@ class TextManager:
 
 	def reset(self):
 		mode, language = self.get_test_settings()
+		self.target_text = []
+		for _ in range(3):
+			self.target_text.extend(self.generate_new_row())
 
-		self.target_text = sample(
-			self.lang_words[language],
-			45,  # start with 45, add more if needed
-		)
 		self.user_text = [
-			[[] for _ in range(15)] for _ in range(3)
+			[[] for _ in range(self.WORDS_PER_ROW)] for _ in range(3)
 		]
 		self.highlighted_text = [
-			[list(word) for word in self.target_text[i * 15:i * 15 + 15]]
+			[
+				list(word)
+				for word in self.target_text[
+					i * self.WORDS_PER_ROW:i * self.WORDS_PER_ROW
+					+ self.WORDS_PER_ROW
+				]
+			]
 			for i in range(3)
 		]
 		self.curr_row_index = 0
@@ -43,21 +49,32 @@ class TextManager:
 		# if next row is last row, then add more words
 		return len(self.user_text) - self.curr_row_index <= 2
 
+	def generate_new_row(self) -> List[str]:
+		words = self.lang_words[self.language]
+		new_row = [
+			*sample(words[6], 2),
+			*sample(words[5], 2),
+			*sample(words[4], 3),
+			*sample(words[3], 3),
+			*sample(words[2], 2),
+		]
+		return sample(new_row, self.WORDS_PER_ROW)
+
 	def add_words(self) -> None:
-		self.target_text.extend(
-			sample(self.lang_words[self.language], 15)
-		)
-		self.user_text.extend(
-			[
-				[[] for _ in range(15)]
-				for _ in range(1)
-			]
-		)
+		self.target_text.extend(self.generate_new_row())
+		self.user_text.extend([[[] for _ in range(self.WORDS_PER_ROW)]])
 		self.highlighted_text.extend(
-			[list(word) for word in self.target_text[i * 15:i * 15 + 15]]
+			[
+				list(word)
+				for word in self.target_text[
+					i * self.WORDS_PER_ROW:i * self.WORDS_PER_ROW
+					+ self.WORDS_PER_ROW
+				]
+			]
 			for i in range(
-				(len(self.target_text) - 15) // 15,
-				len(self.target_text) // 15
+				(len(self.target_text) - self.WORDS_PER_ROW)
+				// self.WORDS_PER_ROW,
+				len(self.target_text) // self.WORDS_PER_ROW,
 			)
 		)
 
@@ -71,7 +88,7 @@ class TextManager:
 		return (
 			self.curr_row_index,
 			self.current_word_index,
-			self.current_char_index
+			self.current_char_index,
 		)
 
 	def update_coords(
@@ -94,10 +111,13 @@ class TextManager:
 			char_idx == -1
 			and word_idx == 0
 			and row_idx > 0
-			and self.is_user_word_correct(row_idx - 1, 14) is False
+			and self.is_user_word_correct(row_idx - 1, self.WORDS_PER_ROW - 1)
+			is False
 		):
 			self.update_coords(
-				row_idx - 1, 14, len(self.user_text[row_idx - 1][14]) - 1
+				row_idx - 1,
+				self.WORDS_PER_ROW - 1,
+				len(self.user_text[row_idx - 1][self.WORDS_PER_ROW - 1]) - 1,
 			)
 		# not a first word of the row
 		# backtrack to the previous word
@@ -108,8 +128,9 @@ class TextManager:
 			and (row_idx, word_idx - 1) not in self.correct_words
 		):
 			self.update_coords(
-				row_idx, word_idx - 1,
-				len(self.user_text[row_idx][word_idx - 1]) - 1
+				row_idx,
+				word_idx - 1,
+				len(self.user_text[row_idx][word_idx - 1]) - 1,
 			)
 		# do not change anything if caret is at first word's first symbol
 
@@ -119,7 +140,7 @@ class TextManager:
 			is_word_correct = self.is_user_word_correct(row_idx, word_idx)
 			if is_word_correct:
 				self.add_correct_word_coords((row_idx, word_idx))
-			if word_idx == 14:  # last word of the row
+			if word_idx == self.WORDS_PER_ROW - 1:  # last word of the row
 				self.update_coords(row_idx + 1, 0, -1)
 			else:
 				self.update_coords(row_idx, word_idx + 1, -1)
@@ -127,7 +148,8 @@ class TextManager:
 	def handle_char(self, char: str) -> None:
 		row_idx, word_idx, char_idx = self.get_coords()
 		user_word = self.get_user_word(row_idx, word_idx)
-		if len(user_word) < 15:  # set boundary
+		target_word = self.get_target_word(row_idx, word_idx)
+		if len(user_word) < len(target_word) + 5:  # set boundary
 			user_word.append(char)
 			self.update_coords(row_idx, word_idx, char_idx + 1)
 
@@ -158,7 +180,9 @@ class TextManager:
 
 	def add_caret(self) -> None:
 		row_idx, word_idx, char_idx = self.get_coords()
-		self.highlighted_text[row_idx][word_idx].insert(char_idx + 1, '|')
+		self.highlighted_text[row_idx][word_idx].insert(
+			char_idx + 1, Config.caret
+		)
 
 	def remove_caret(self) -> None:
 		row_idx, word_idx, char_idx = self.get_coords()
@@ -232,4 +256,4 @@ class TextManager:
 		return self.user_text[row_idx][word_idx]
 
 	def get_target_word(self, row_idx: int, word_idx: int) -> str:
-		return self.target_text[row_idx * 15 + word_idx]
+		return self.target_text[row_idx * self.WORDS_PER_ROW + word_idx]

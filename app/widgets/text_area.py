@@ -7,12 +7,11 @@ from app.managers.text_manager import TextManager
 from app.ui.text_area_ui import Ui_Form
 
 
-class TextArea(QWidget):
+class TextArea(QWidget, Ui_Form):
 	def __init__(self, db_manager, parent) -> None:
 		super().__init__(parent=parent)
 		self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-		self.ui = Ui_Form()
-		self.ui.setupUi(self)
+		self.setupUi(self)
 
 		# init text manager
 		self.text_manager = TextManager(db_manager)
@@ -26,7 +25,7 @@ class TextArea(QWidget):
 		self.initUI()
 
 	def initUI(self) -> None:
-		font = QFont()
+		font = QFont('monospace')
 		font.setPointSize(24)
 
 		self.document = QTextDocument()
@@ -37,17 +36,15 @@ class TextArea(QWidget):
 	def keyPressEvent(self, event: QEvent) -> None:
 		if not self.isVisible():
 			return
-		if event.key() not in self.text_manager.KEYS_TO_LISTEN:
-			return
-		if event.key() == Qt.Key.Key_Backspace:
-			self.text_manager.handle_backspace()
-		elif event.key() == Qt.Key.Key_Space:
-			self.text_manager.handle_space()
-		else:
+		if self.is_char_valid(event.text()):
 			if not self.started:
 				self.started = True
 				self.stats_manager.start()  # start gathering stats
 			self.text_manager.handle_char(event.text())
+		elif event.key() == Qt.Key.Key_Backspace:
+			self.text_manager.handle_backspace()
+		elif event.key() == Qt.Key.Key_Space:
+			self.text_manager.handle_space()
 		self.update_display()
 
 	def update_display(self) -> None:
@@ -60,13 +57,13 @@ class TextArea(QWidget):
 		) = self.text_manager.generate_display_text()
 
 		self.document.setHtml(first_row_text)
-		self.ui.first_row_display.setText(self.document.toHtml())
+		self.first_row_display.setText(self.document.toHtml())
 
 		self.document.setHtml(second_row_text)
-		self.ui.second_row_display.setText(self.document.toHtml())
+		self.second_row_display.setText(self.document.toHtml())
 
 		self.document.setHtml(third_row_text)
-		self.ui.third_row_display.setText(self.document.toHtml())
+		self.third_row_display.setText(self.document.toHtml())
 
 		self.text_manager.remove_caret()
 
@@ -75,3 +72,7 @@ class TextArea(QWidget):
 		self.text_manager.reset()
 		self.stats_manager.reset()
 		self.update_display()
+
+	@staticmethod
+	def is_char_valid(char: str) -> bool:
+		return char.isalnum()

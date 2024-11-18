@@ -49,18 +49,25 @@ python -m pip install -r requirements.txt
 ```sh
 python -m app
 ```
+## Собрать из иходников
+
+[BUILDING.md](https://github.com/sazsu/QTyper/blob/main/BUILDING.md)
 
 ## Технологии
+
 - Python
 - PyQt6
 - СУБД SQLite
 - Matplotlib
 
 ## ER диаграмма
+
 ![ERD](ERD.svg)
 
-## Признания
-[Английские](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) и [русские](https://en.wiktionary.org/wiki/Appendix:Russian_Frequency_lists/1-1000) слова для генерации тестов были выбраны из списка наиболее часто употребляемых слов по мнению [Wiktionary](https://www.wiktionary.org/).
+## Благодарности
+
+[Английские](https://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_fiction) и [русские](https://en.wiktionary.org/wiki/Appendix:Russian_Frequency_lists/1-1000) слова для генерации тестов были выбраны из списка наиболее часто употребляемых слов по версии [Wiktionary](https://www.wiktionary.org/).
 
 ## Лицензия
-Данный проект лицензирован в соответствии с условиями лицензии GNU General Public License v3.0, ознакомиться с ней можно [здесь](https://www.gnu.org/licenses/gpl-3.0.en.html) или в файле LICENSE.
+
+Данный проект лицензирован в соответствии с условиями лицензии GNU General Public License v3.0, ознакомиться с ней можно [здесь](https://www.gnu.org/licenses/gpl-3.0.en.html) или в файле [LICENSE](https://github.com/sazsu/QTyper/blob/main/LICENSE).
