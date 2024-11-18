@@ -11,6 +11,5 @@ class ModeButton(BaseIconButton):
 
 	def btn_handler(self):
 		# set mode of whole app
-		# self -> TestPage -> QStackedWidget -> MainWindow
 		self.main_window.change_interface_mode_db()
 		self.main_window.set_interface_mode()

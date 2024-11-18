@@ -9,5 +9,5 @@ class ResetButton(BaseIconButton):
 	def btn_handler(self):
 		if self.parent().main_container.currentIndex() == 0:  # textarea
 			self.parent().text_area.reset_test()
-		else:  # showing a chart -> test was reseted when chart was shown
+		else:
 			self.parent().main_container.setCurrentIndex(0)

@@ -94,4 +94,3 @@ class PlotCanvas(FigureCanvasQTAgg):
 			spine.set_color(text_color)
 		for spine in self.ax1.spines.values():
 			spine.set_color(text_color)
-		

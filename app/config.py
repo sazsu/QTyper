@@ -6,24 +6,24 @@ class Config:
 	acc_cyan = '#23d5d5'
 	green = '#1fc471'
 	red = '#ff506e'
-	correct_format = '<span class="correct" style="color: #1fc471;">{}</span>'
+	correct_format = '<span class=correct" style="color: #1fc471;">{}</span>'
 	wrong_format = '<span class="wrong" style="color: #ff506e;">{}</span>'
 
-	app_light = """
+	app_light = '''
 		* {
 			color: #121212;
 			background: #f2f2f2;
 		}
 		QPushButton { border: none; }
-		"""
+		'''
 
-	app_dark = """
+	app_dark = '''
 		* {
 			color: #c2c2c2;
 			background: #121212;
 		}
 		QPushButton { border: none; }
-		"""
-	caret = '''<span style="margin-left: -2px;
+		'''
+	caret = '''<span style='margin-left: -2px;
 			margin-right: -2px;
-			font-family: Inter;">|</span>'''
+			font-family: Inter;'>|</span>'''
