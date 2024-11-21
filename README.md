@@ -49,7 +49,7 @@ python -m pip install -r requirements.txt
 ```sh
 python -m app
 ```
-## Собрать из иходников
+## Собрать из иcходников
 
 [BUILDING.md](https://github.com/sazsu/QTyper/blob/main/BUILDING.md)
 
