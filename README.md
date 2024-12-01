@@ -1,6 +1,6 @@
 <div align=center>
   <h1 >QTyper</h1>
-  <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue"/>
+  <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"/>
   <img src="https://img.shields.io/badge/PyQt-2cde85?style=for-the-badge&&logo=qt&logoColor=white"/>
   <img src="https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white"/>
   <img src="https://img.shields.io/badge/license-GPLv3-blue?style=for-the-badge"/>
